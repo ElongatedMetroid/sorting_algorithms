@@ -25,20 +25,18 @@ where T: PartialOrd + Debug
     }
 
     fn bubble_step(&mut self) -> bool {
-        let mut complete = true;
         let mut swap_list = Vec::new();
 
-        for (index, [a, b]) in self.array_windows().enumerate() {
+        for (index, [a, b]) in &mut self.array_windows().enumerate() {
             if a > b {
                 swap_list.push(index);
             }
         }
 
-        for index in swap_list {
-            complete = false;
-            self.swap(index, index + 1);
+        for index in &swap_list {
+            self.swap(*index, index + 1);
         }
 
-        complete
+        swap_list.is_empty()
     }
 }
